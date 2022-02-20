@@ -1,9 +1,17 @@
 (() => {
 
+  function createSiteTitleHidden() {
+    const siteTitle = document.createElement('h1');
+    siteTitle.textContent = 'Конференции Олега Бунина';
+    siteTitle.classList.add('visually-hidden');
+    return siteTitle;
+  };
+
   function createCalendarSection() {
     const main = document.createElement('main');
     const calendarSection = document.createElement('section');
     const container = document.createElement('div');
+    const siteTitle = createSiteTitleHidden();
     const calendarList = document.createElement('ul');
 
     main.classList.add('main');
@@ -11,7 +19,10 @@
     container.classList.add('container', 'calendar__container');
     calendarList.classList.add('calendar__list');
 
-    container.append(calendarList);
+    container.append(
+      siteTitle,
+      calendarList
+      );
     calendarSection.append(container);
     main.append(calendarSection);
 
@@ -35,6 +46,7 @@
 
     dateRange.textContent = dates;
     logoImg.src = img;
+    logoImg.alt = `Лого ${title}`
     cardTitle.textContent = title;
     cardDescription.textContent = descr;
     address.textContent = location;
@@ -91,9 +103,10 @@
     const onticoLogo = document.createElement('a');
     const logo = document.createElement('img');
     const navigation = createNavigation();
+    const br = document.createElement('br')
 
     supportSpan.textContent = 'По любым вопросам обращайтесь: ';
-    support.textContent = `Бухгалтерия&nbsp;и&nbsp;вопросы&nbsp;оплаты: `;
+    support.textContent = `Бухгалтерия и вопросы оплаты: `;
     supportEmail.textContent = 'support@ontico.ru ';
     supportEmail.href = 'mailto:support@ontico.ru';
     supportPhone.textContent = '+7(495) 646-07-68 ';
@@ -108,6 +121,7 @@
     organizationCommitteeEmail.href = 'mailto:organization@ontico.ru';
     address.textContent = '125040, Москва, Нижняя ул., д. 14, стр. 7, подъезд 1, оф. 16 ООО «Конференции Олега Бунина»';
     logo.src = './img/ontico_logo.png';
+    logo.alt = 'Логотип Онтико';
 
     footer.classList.add('footer');
     container.classList.add('container', 'footer__container');
@@ -128,6 +142,7 @@
     onticoLogo.classList.add('footer__logo');
     navigation.classList.add('footer__navigation');
 
+    supportSpan.append(br);
     support.insertAdjacentElement('afterbegin', supportSpan);
     support.append(
       supportEmail,
@@ -154,10 +169,12 @@
       onticoLogo
     );
     container.append(
-      contactsWrapper,
-      navigation
+      contactsWrapper
     );
-    footer.append(container);
+    footer.append(
+      container,
+      navigation
+      );
 
     return footer;
   };
@@ -165,6 +182,7 @@
   function createNavigation() {
     const monthArr = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
 
+    const navigationSection = document.createElement('div');
     const navigationContainer = document.createElement('div');
     const currentYear = document.createElement('span');
     const navigation = document.createElement('nav');
@@ -185,7 +203,8 @@
 
     currentYear.textContent = '2022 год:'
 
-    navigationContainer.classList.add('navigation');
+    navigationSection.classList.add('navigation');
+    navigationContainer.classList.add('navigation__container', 'container');
     currentYear.classList.add('navigation__current-year');
     navigation.classList.add('navigation__nav');
     navigationList.classList.add('navigation__list');
@@ -195,8 +214,9 @@
       currentYear,
       navigation
     );
+    navigationSection.append(navigationContainer);
 
-    return navigationContainer;
+    return navigationSection;
   };
 
   async function createSite() {
